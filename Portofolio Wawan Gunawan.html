@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wawan Gunawan — Portofolio Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #090d16;
+            color: #f1f5f9;
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .editing-active [data-editable] {
+            outline: 1.5px dashed #38bdf8;
+            outline-offset: 4px;
+            border-radius: 6px;
+            background: rgba(56, 189, 248, 0.08);
+            cursor: text;
+        }
+
+        /* Print / Save PDF Styling */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .glass-card {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                color: #0f172a !important;
+                break-inside: avoid;
+            }
+            .text-slate-300, .text-slate-400, .text-slate-200 {
+                color: #334155 !important;
+            }
+            .text-brand-400 {
+                color: #0369a1 !important;
+            }
+            .badge-pill {
+                background: #f1f5f9 !important;
+                border: 1px solid #94a3b8 !important;
+                color: #0f172a !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 sm:pb-12 selection:bg-brand-500 selection:text-slate-950">
+
+    <!-- Top Admin / Edit Control Bar -->
+    <div class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 no-print">
+        <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 text-xs text-slate-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Portofolio Siap Lamaran</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="btn-toggle-edit" onclick="toggleEditMode()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square text-brand-400"></i>
+                    <span id="edit-btn-text">Edit Data</span>
+                </button>
+                <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-brand-500/15 hover:bg-brand-500/25 text-brand-400 text-xs font-semibold border border-brand-500/30 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Simpan PDF</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Edit Mode Banner -->
+        <div id="edit-banner" class="hidden bg-brand-500 text-slate-950 px-4 py-2 text-xs font-medium">
+            <div class="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-2">
+                <span><i class="fa-solid fa-circle-info mr-1"></i> Klik teks mana saja yang bergaris putus-putus untuk mengedit.</span>
+                <div class="flex items-center gap-2">
+                    <button onclick="saveChanges()" class="bg-slate-900 text-white px-3 py-1 rounded text-xs hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
+                    </button>
+                    <button id="btn-reset" onclick="handleResetClick()" class="bg-red-700 text-white px-2.5 py-1 rounded text-xs hover:bg-red-800 transition">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="portfolio-root" class="max-w-4xl mx-auto px-4 pt-6 sm:pt-10 space-y-6">
+
+        <!-- Hero / Header Card -->
+        <header class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none no-print"></div>
+            
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+                <div class="space-y-3 flex-1">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span id="field-status" data-editable>Siap Bekerja • Penempatan Tangerang & Sekitarnya</span>
+                    </div>
+
+                    <h1 id="field-name" data-editable class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+                        Wawan Gunawan
+                    </h1>
+
+                    <p id="field-role" data-editable class="text-base sm:text-lg font-semibold text-brand-400">
+                        Operator Produksi Manufaktur • Quality Control (QC) • Pergudangan & Permesinan
+                    </p>
+
+                    <p id="field-summary" data-editable class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+                        Tenaga kerja disiplin dan teliti yang berdomisili di Kota Tangerang. Berpengalaman di lini produksi manufaktur, pengemasan, pemeriksaan kualitas (QC), dan operasional pergudangan, serta memiliki sertifikasi pelatihan kejuruan Industri Permesinan dari BLK Tangerang Selatan.
+                    </p>
+
+                    <!-- Contact Info Row -->
+                    <div class="pt-2 flex flex-wrap gap-y-2 gap-x-5 text-xs sm:text-sm text-slate-400">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-brand-400"></i>
+                            <span id="field-location" data-editable>Kota Tangerang, Banten</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                            <span id="field-phone" data-editable>081234567890</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-brand-400"></i>
+                            <span id="field-email" data-editable>wawangunawan.pro@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action Buttons -->
+                    <div class="flex flex-wrap items-center gap-3 pt-4 no-print">
+                        <a id="btn-wa" href="https://wa.me/6281234567890?text=Halo%20Wawan,%20saya%20tertarik%20dengan%20profil%20Anda" target="_blank" class="wa-link px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold text-sm flex items-center gap-2 shadow-lg shadow-brand-500/25 transition">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Hubungi via WhatsApp</span>
+                        </a>
+                        <button onclick="copyEmail()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 flex items-center gap-2 transition">
+                            <i class="fa-regular fa-copy text-brand-400"></i>
+                            <span>Salin Email</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Pengalaman & Pelatihan -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+            <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                <div class="w-8 h-8 rounded-lg bg-brand-500/15 text-brand-400 flex items-center justify-center">
+                    <i class="fa-solid fa-industry"></i>
+                </div>
+                <h2 class="text-lg sm:text-xl font-bold text-white">Pengalaman Kerja & Pelatihan</h2>
+            </div>
+
+            <div class="space-y-5">
+                <div class="relative pl-5 border-l-2 border-brand-500/50 space-y-1">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h3 id="field-exp1-title" data-editable class="font-bold text-white text-base">Produksi Manufaktur, Pengemasan & Quality Control</h3>
+                        <span id="field-exp1-badge" data-editable class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-brand-400 font-medium">Pengalaman Industri</span>
+                    </div>
+                    <p id="field-exp1-desc" data-editable class="text-sm text-slate-300 leading-relaxed">
+                        Menjalankan tahapan proses produksi mulai dari pencampuran bahan, pelapisan, pengemasan (packing), hingga pengecekan kualitas akhir (QC) agar produk sesuai standar sebelum dikirim.
+                    </p>
+                </div>
+
+                <div class="relative pl-5 border-l-2 border-slate-700 space-y-1">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h3 id="field-exp2-title" data-editable class="font-bold text-white text-base">Operasional Pergudangan & Logistik</h3>
+                        <span id="field-exp2-badge" data-editable class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium">Warehouse</span>
+                    </div>
+                    <p id="field-exp2-desc" data-editable class="text-sm text-slate-300 leading-relaxed">
+                        Mengelola penerimaan dan pengeluaran barang, penataan stok di area gudang secara rapi, pengecekan kesesuaian jumlah barang, serta menjaga ketertiban area kerja (5R).
+                    </p>
+                </div>
+
+                <div class="relative pl-5 border-l-2 border-slate-700 space-y-1">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h3 id="field-exp3-title" data-editable class="font-bold text-white text-base">Pelatihan Kejuruan Industri Permesinan</h3>
+                        <span id="field-exp3-badge" data-editable class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-emerald-400 font-medium">BLK Tangerang Selatan</span>
+                    </div>
+                    <p id="field-exp3-desc" data-editable class="text-sm text-slate-300 leading-relaxed">
+                        Mengikuti pelatihan intensif pengoperasian mesin bubut, mesin frais (milling), bor, dan gerinda. Terlatih membaca gambar teknik dasar serta melakukan pengukuran presisi menggunakan jangka sorong (vernier caliper) dan mikrometer.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Keahlian & Pendidikan Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Keahlian -->
+            <section class="glass-card rounded-3xl p-6 sm:p-7 space-y-4">
+                <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-500/15 text-brand-400 flex items-center justify-center">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <h2 class="text-lg font-bold text-white">Keahlian Utama</h2>
+                </div>
+
+                <div id="field-skills" data-editable class="flex flex-wrap gap-2">
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Operasional Lini Produksi</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Quality Control (QC)</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Pergudangan & Stok</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Mesin Bubut, Milling & Gerinda</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Baca Gambar Teknik</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Vernier Caliper & Mikrometer</span>
+                    <span class="badge-pill px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700 text-xs font-medium text-slate-200">Budaya Kerja 5R & K3</span>
+                </div>
+            </section>
+
+            <!-- Pendidikan & Kesiapan Kerja -->
+            <section class="glass-card rounded-3xl p-6 sm:p-7 space-y-4">
+                <div class="flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-500/15 text-brand-400 flex items-center justify-center">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="text-lg font-bold text-white">Pendidikan & Keterangan</h2>
+                </div>
+
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <div id="field-edu-title" data-editable class="font-bold text-white">Pendidikan Kesetaraan Paket C (Setara SMA)</div>
+                        <div id="field-edu-sub" data-editable class="text-slate-400 text-xs mt-0.5">Lulusan Pendidikan Menengah Atas</div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/80">
+                        <div class="font-semibold text-slate-200 text-xs uppercase tracking-wider mb-1.5">Kesiapan Kerja</div>
+                        <ul id="field-readiness" data-editable class="text-xs text-slate-300 space-y-1.5 list-disc pl-4">
+                            <li>Siap bekerja sistem shift maupun non-shift.</li>
+                            <li>Terbiasa bekerja dengan target produksi dan standar SOP.</li>
+                            <li>Siap bergabung segera (Immediate Join).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer CTA -->
+        <footer class="glass-card rounded-3xl p-6 text-center space-y-3">
+            <p class="text-sm text-slate-300">Terima kasih telah meninjau profil saya. Silakan hubungi saya untuk jadwal wawancara.</p>
+            <div class="pt-1 flex justify-center items-center gap-3 no-print">
+                <a href="https://wa.me/6281234567890?text=Halo%20Wawan,%20saya%20tertarik%20dengan%20profil%20Anda" target="_blank" class="wa-link px-6 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold text-sm transition">
+                    <i class="fa-brands fa-whatsapp mr-1.5"></i> Chat WhatsApp
+                </a>
+                <button onclick="window.print()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition border border-slate-700">
+                    <i class="fa-solid fa-download mr-1.5"></i> Unduh CV (PDF)
+                </button>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Mobile Bottom Dock -->
+    <div class="fixed bottom-3 left-3 right-3 sm:hidden z-40 no-print">
+        <div class="glass-card rounded-2xl p-2 flex items-center justify-around border border-brand-500/30 shadow-2xl shadow-black">
+            <a href="https://wa.me/6281234567890?text=Halo%20Wawan,%20saya%20membuka%20link%20portofolio%20Anda" target="_blank" class="wa-link flex-1 py-1.5 text-center text-brand-400 font-bold text-xs flex flex-col items-center gap-1">
+                <i class="fa-brands fa-whatsapp text-base"></i>
+                <span>WhatsApp</span>
+            </a>
+            <div class="w-px h-6 bg-slate-800"></div>
+            <button onclick="copyEmail()" class="flex-1 py-1.5 text-center text-slate-200 font-semibold text-xs flex flex-col items-center gap-1">
+                <i class="fa-regular fa-envelope text-base text-brand-400"></i>
+                <span>Salin Email</span>
+            </button>
+            <div class="w-px h-6 bg-slate-800"></div>
+            <button onclick="window.print()" class="flex-1 py-1.5 text-center text-slate-200 font-semibold text-xs flex flex-col items-center gap-1">
+                <i class="fa-solid fa-file-pdf text-base text-brand-400"></i>
+                <span>PDF CV</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-20 sm:bottom-6 right-4 z-50 bg-slate-900 border border-brand-500/40 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium opacity-0 pointer-events-none transition-opacity duration-300">
+        Notifikasi
+    </div>
+
+    <script>
+        let isEditing = false;
+        const editableFields = [
+            'field-status', 'field-name', 'field-role', 'field-summary',
+            'field-location', 'field-phone', 'field-email',
+            'field-exp1-title', 'field-exp1-badge', 'field-exp1-desc',
+            'field-exp2-title', 'field-exp2-badge', 'field-exp2-desc',
+            'field-exp3-title', 'field-exp3-badge', 'field-exp3-desc',
+            'field-skills', 'field-edu-title', 'field-edu-sub', 'field-readiness'
+        ];
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            const root = document.getElementById('portfolio-root');
+            const banner = document.getElementById('edit-banner');
+            const btnText = document.getElementById('edit-btn-text');
+
+            if (isEditing) {
+                root.classList.add('editing-active');
+                banner.classList.remove('hidden');
+                btnText.innerText = 'Selesai Edit';
+                editableFields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.setAttribute('contenteditable', 'true');
+                });
+                showToast('Mode Edit Aktif. Silakan klik teks untuk mengubah.');
+            } else {
+                root.classList.remove('editing-active');
+                banner.classList.add('hidden');
+                btnText.innerText = 'Edit Data';
+                editableFields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.removeAttribute('contenteditable');
+                });
+                saveChanges();
+            }
+        }
+
+        function updateWhatsAppLinks(phoneText) {
+            let cleanPhone = (phoneText || '').replace(/[^0-9]/g, '');
+            if (cleanPhone.startsWith('0')) {
+                cleanPhone = '62' + cleanPhone.slice(1);
+            }
+            if (cleanPhone) {
+                document.querySelectorAll('.wa-link').forEach(link => {
+                    link.href = `https://wa.me/${cleanPhone}?text=Halo%20Wawan,%20saya%20tertarik%20dengan%20profil%20Anda`;
+                });
+            }
+        }
+
+        function saveChanges() {
+            const savedData = {};
+            editableFields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    savedData[id] = el.innerHTML;
+                }
+            });
+            localStorage.setItem('wawan_portfolio_data', JSON.stringify(savedData));
+            const phoneEl = document.getElementById('field-phone');
+            if (phoneEl) updateWhatsAppLinks(phoneEl.innerText);
+            showToast('Perubahan data & tautan WhatsApp tersimpan!');
+        }
+
+        function loadSavedData() {
+            const raw = localStorage.getItem('wawan_portfolio_data');
+            if (raw) {
+                try {
+                    const data = JSON.parse(raw);
+                    Object.keys(data).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.innerHTML = data[id];
+                        }
+                    });
+                    const phoneEl = document.getElementById('field-phone');
+                    if (phoneEl) updateWhatsAppLinks(phoneEl.innerText);
+                } catch (e) {
+                    console.error('Gagal memuat data:', e);
+                }
+            }
+        }
+
+        let resetConfirmPending = false;
+        function handleResetClick() {
+            const btn = document.getElementById('btn-reset');
+            if (!resetConfirmPending) {
+                resetConfirmPending = true;
+                btn.innerText = 'Yakin Reset?';
+                showToast('Klik sekali lagi tombol Reset untuk mengembalikan data awal.');
+                setTimeout(() => {
+                    resetConfirmPending = false;
+                    if (btn) btn.innerText = 'Reset';
+                }, 4000);
+            } else {
+                localStorage.removeItem('wawan_portfolio_data');
+                location.reload();
+            }
+        }
+
+        function copyEmail() {
+            const emailText = document.getElementById('field-email').innerText.trim();
+            navigator.clipboard.writeText(emailText).then(() => {
+                showToast('Alamat email berhasil disalin: ' + emailText);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+        });
+    </script>
+</body>
+</html>
